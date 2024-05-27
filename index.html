@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluid Mechanics Lab</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        .shrink-nav nav {
+            top: -80px;
+        }
+        .profile-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 100px;
+        }
+        .profile-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
+            transform: translateZ(-1px);
+        }
+        .profile-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .profile-box {
+            width: 320px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .profile-box:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+        }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-details h2 {
+            margin: 0 0 5px;
+            font-size: 24px;
+        }
+        .profile-details p {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #ddd;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+        .social-links a:last-child {
+            margin-right: 0;
+        }
+        .social-links a img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .social-links a:hover {
+            transform: scale(1.1);
+        }
+        .calculator-container {
+            background-color: #e3f2fd;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .calculator-container h1 {
+            margin-top: 0;
+            font-size: 28px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result p {
+            margin: 0;
+            padding: 5px 0;
+            color: #333;
+        }
+        .connect-section {
+            background-color: #b3e5fc;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .theory-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            background-color: #fffb00; /* Background color */
+            background-image: url('path/to/your/image.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .theory-section h2 {
+            margin-bottom: 20px;
+            color: #333; /* Text color */
+        }
+
+        .theory-section p {
+            margin: 10px 0;
+            color: #555; /* Text color */
+            font-size: 18px; /* Font size */
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader"></div>
+    <nav id="navbar">
+        <!-- Navigation content goes here -->
+    </nav>
+    <div class="profile-container">
+        <video autoplay muted loop>
+            <source src="Assets/background-video.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="profile-box">
+            <div class="profile-pic">
+                <img src="Assets/profile pic.jpg" alt="Profile Picture">
+            </div>
+            <div class="profile-details">
+                <h2>HARSH KUMAR</h2>
+                <p>CIVIL ENGINEER</p>
+            </div>
+        </div>
+    </div>
+    <div class="theory-section">
+        <h2>Theory of Pipe Friction Losses</h2>
+        <p>Friction losses occur in pipes due to the resistance offered by the pipe walls to the flow of fluid. This resistance results in a reduction of pressure and energy along the length of the pipe. The major factors influencing pipe friction losses include:</p>
+        <ul>
+            <li>Pipe length (L): Longer pipes tend to have higher friction losses.</li>
+            <li>Fluid velocity (v): Higher velocities lead to increased friction losses.</li>
+            <li>Pipe diameter (D): Smaller diameters result in higher friction losses.</li>
+            <li>Fluid viscosity (μ): Viscous fluids experience higher friction losses.</li>
+            <li>Roughness of the pipe surface: Rough surfaces increase friction losses.</li>
+        </ul>
+        <p>Understanding and quantifying these losses are crucial for designing efficient piping systems and predicting flow behavior.</p>
+    </div>
+
+
+    <div class="calculator-container">
+        <h1>Friction Losses Calculator</h1>
+        <form id="calculator-form">
+            <label for="diameter">Diameter of Pipe (D) in meters:</label>
+            <input type="text" id="diameter" name="diameter" placeholder="Enter diameter">
+
+            <label for="length">Length of Pipe (L) in meters:</label>
+            <input type="text" id="length" name="length" placeholder="Enter length">
+            <label for="hm">Differential Manometer Reading (hm) in meters:</label>
+            <input type="text" id="hm" name="hm" placeholder="Enter hm">
+
+            <label for="z0">Initial Piezometric Level in Collecting Tank (Z0) in meters:</label>
+            <input type="text" id="z0" name="z0" placeholder="Enter Z0">
+
+            <label for="z1">Final Piezometric Level in Collecting Tank (Z1) in meters:</label>
+            <input type="text" id="z1" name="z1" placeholder="Enter Z1">
+
+            <label for="time">Time Taken to Fill the Collecting Tank (T) in seconds:</label>
+            <input type="text" id="time" name="time" placeholder="Enter time">
+
+            <label for="rho_m">Density of the Manometer Fluid (ρm) in kg/m³:</label>
+            <input type="text" id="rho_m" name="rho_m" placeholder="Enter ρm">
+
+            <label for="rho">Density of the Flowing Fluid (ρ) in kg/m³:</label>
+            <input type="text" id="rho" name="rho" placeholder="Enter ρ">
+
+            <label for="mu">Dynamic Viscosity of the Fluid (μ) in Pa.s:</label>
+            <input type="text" id="mu" name="mu" placeholder="Enter μ">
+
+            <label for="area">Area of the Collecting Tank (Act) in m²:</label>
+            <input type="text" id="area" name="area" placeholder="Enter Act">
+
+            <button type="button" onclick="calculateResults()">Calculate</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="connect-section" id="connect-section">
+        <h1>Connect with me</h1>
+        <div class="social-links">
+            <a href="https://www.instagram.com/_harshkumar04/" target="_blank">
+                <img src="Assets/Instagram icon.webp" alt="Instagram">
+            </a>
+            <a href="https://x.com/hkHarsh2004" target="_blank">
+                <img src="Assets/X (twitter icon).jpg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/harsh-kumar2015204/" target="_blank">
+                <img src="Assets/linkedin icon.png" alt="LinkedIn">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shrink-nav');
+            } else {
+                navbar.classList.remove('shrink-nav');
+            }
+        });
+
+        function calculateResults() {
+            const D = parseFloat(document.getElementById('diameter').value);
+            const L = parseFloat(document.getElementById('length').value);
+            const hm = parseFloat(document.getElementById('hm').value);
+            const Z0 = parseFloat(document.getElementById('z0').value);
+            const Z1 = parseFloat(document.getElementById('z1').value);
+            const T = parseFloat(document.getElementById('time').value);
+            const rho_m = parseFloat(document.getElementById('rho_m').value);
+            const rho = parseFloat(document.getElementById('rho').value);
+            const mu = parseFloat(document.getElementById('mu').value);
+            const A_ct = parseFloat(document.getElementById('area').value);
+
+            const g = 9.81; // acceleration due to gravity in m/s^2
+
+            // Calculate actual discharge Q_act
+            const hct = Z1 - Z0;
+            const Q_act = (A_ct * hct) / T;
+
+            // Calculate cross-sectional area of the pipe
+            const A = Math.PI * Math.pow(D / 2, 2);
+
+            // Calculate velocity v
+            const v = Q_act / A;
+
+            // Calculate head loss hf
+            const hf = hm * (rho_m - rho) / rho;
+
+            // Calculate friction factor f
+            const f = (hf * D) / (L * Math.pow(v, 2) / (2 * g));
+
+            // Calculate Reynolds number Re
+            const Re = (rho * v * D) / mu;
+
+            const results = `
+                <p>Discharge (Q_act): ${Q_act.toFixed(5)} m³/s</p>
+                <p>Velocity (v): ${v.toFixed(5)} m/s</p>
+                <p>Head Loss (hf): ${hf.toFixed(5)} meters</p>
+                <p>Friction Factor (f): ${f.toFixed(5)}</p>
+                <p>Reynolds Number (Re): ${Re.toFixed(5)}</p>
+            `;
+            
+            document.getElementById('result').innerHTML = results;
+        }
+    </script>
+</body>
+</html>
